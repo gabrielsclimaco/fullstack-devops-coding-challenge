@@ -14,7 +14,6 @@ const IPv4Addr = (props) => {
   const setOctet = (octet, index, change) => {
     let updatedAddress = [...ipv4.address];
     if (change) {
-      const [x, setX] = useState(true);
       updatedAddress[index] = +octet;
       setIpv4(new IPv4(updatedAddress, ipv4.mask));
     }
@@ -38,7 +37,7 @@ const IPv4Addr = (props) => {
       netmasksElements.push(
         <div key={`networkAddress-${index}`}>
           {e.networkAddress}/{e.netmask} ({e.count} hosts)
-        </div>
+        </div>,
       );
     });
     return netmasksElements;
