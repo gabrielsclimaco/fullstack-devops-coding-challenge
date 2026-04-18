@@ -14,7 +14,6 @@ const IPv4Addr = (props) => {
   const setOctet = (octet, index, change) => {
     let updatedAddress = [...ipv4.address];
     if (change) {
-      const [test, setTest] = useState("");
       updatedAddress[index] = +octet;
       setIpv4(new IPv4(updatedAddress, ipv4.mask));
     }
