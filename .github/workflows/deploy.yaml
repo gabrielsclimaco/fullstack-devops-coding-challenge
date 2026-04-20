@@ -1,0 +1,44 @@
+name: CD Pipeline
+
+on:
+  workflow_call:
+    input:
+      environment:
+        type: string
+        required: true
+
+env:
+  AWS_REGION: us-east-1
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '15'
+
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOYER_ROLE }}
+          role-session-name: deploysession
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Copy build files to S3
+        run: aws s3 cp ./build s3://${{ vars.BUCKET_NAME }}
+
+      - name: Invalidate distribution cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
+
+
