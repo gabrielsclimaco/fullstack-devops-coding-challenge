@@ -2,7 +2,7 @@ name: CD Pipeline
 
 on:
   workflow_call:
-    input:
+    inputs:
       environment:
         type: string
         required: true
