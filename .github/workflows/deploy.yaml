@@ -16,7 +16,9 @@ env:
 
 jobs:
   deploy:
-    environment: ${{ inputs.environment }}
+    environment:
+      name: ${{ inputs.environment }}
+      url: ${{ inputs.environment }}.coffee.tec.br
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
