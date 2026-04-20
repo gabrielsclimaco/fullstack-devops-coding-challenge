@@ -30,7 +30,7 @@ resource "aws_iam_role_policy" "main" {
           "s3:ListBucket",
           "s3:GetBucket",
           "s3:GetObject",
-          "s3:PutBucket",
+          "s3:PutObject",
         ]
         Effect = "Allow"
         Resource = [
